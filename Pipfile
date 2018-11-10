@@ -5,7 +5,12 @@ verify_ssl = true
 
 [packages]
 flask = "*"
-patternfinder = {git = "https://github.com/elvis-project/patternfinder.git"}
+patternfinder = {editable = true, git = "https://github.com/elvis-project/patternfinder"}
+"music21" = "*"
+pyyaml = "*"
+more-itertools = "*"
+smr-flask = {path = "./flask-api", editable = true}
+whoosh = "*"
 
 [requires]
 python_version = "3.5"

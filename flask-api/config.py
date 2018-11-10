@@ -5,4 +5,4 @@ basedir = os.path.join(os.path.abspath(os.path.dirname(__file__)), os.path.pardi
 
 DEBUG = True
 
-MUSIC_FILES = os.path.join(basedir, "patternfinder", "music_files")
+MUSIC_FILES = "/usr/share/smr-db/Palestrina"
