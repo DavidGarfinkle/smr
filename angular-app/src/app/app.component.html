@@ -1,0 +1,42 @@
+<nav class="navbar navbar-light bg-info">
+  <div class="container">
+
+    <div class="navbar-brand">PatternFinder</div>
+
+    <ul class="nav mr-auto">
+
+      <li class="nav-item">
+        <a target="_blank" class="nav-link" href="about/">About</a>
+      </li>
+
+      <li class="nav-item">
+        <a target="_blank" class="nav-link" href="https://github.com/ELVIS-Project/PatternFinder">Github</a> 
+      </li>
+
+    </ul>
+
+    <span target="_blank" class="nav-text navbar-right">By David Garfinkle</span>
+
+  </div>
+</nav>
+
+<app-music-editor></app-music-editor>
+    <!--
+    <verovio-humdrum-viewer
+        v-bind:targetWindowFilter="targetWindowFilter"
+        v-on:targetWindowFilter="targetWindowFilter = arguments[0]"
+        v-bind:diatonicOccFilter="diatonicOccFilter"
+        v-on:diatonicOccFilter="diatonicOccFilter = arguments[0]"
+        v-bind:transpositionFilter="transpositionFilter"
+        v-on:transpositionFilter="transpositionFilter = arguments[0]">
+    </verovio-humdrum-viewer>
+
+    <div class="align-middle font-weight-light text-center">#{{filteredOccs.length}} Occurrences</div>
+    <div v-init="loadMoreOccs" v-infinite-scroll="loadMoreOccs" infinite-scroll-disabled="infiniteScrollBusy" infinite-scroll-distance="10">
+    <div class="container-fluid">
+        <div class="row">
+            <div v-for="(occ, index) in loadedOccs" class="col-md-6 pl-0 pr-0"><result v-show="filterOccForAll(occ)" v-bind:occ="occ"></result></div>
+        </div>
+    </div>
+</div>
+    -->
