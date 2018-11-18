@@ -1,0 +1,56 @@
+openapi: 2.0
+info:
+  description: "Content-Based Music Retrieval"
+  version: "1.0.0"
+  title: "SMIR"
+  contact:
+    name: "David Garfinkle"
+    email: "david.garfinkle@mail.mcgill.ca"
+host: "http://132.206.14.238:8000"
+paths:
+  /search:
+    get:
+      operationId: "search"
+      summary: "Request the service to perform a content-based music retrieval search"
+      produces: 
+        - "text/html"
+        - "application/json"
+      parameters:
+        - name: "encoding"
+          in: "query"
+          description: "Indicates the music encoding language of the query string"
+          schema:
+            type: "string"
+        - name: "query"
+          in: "query"
+          description: "A music query string"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "The server successfully completed a search for the music query and is returning the result(s)" 
+          schema:
+            type: "array"
+            items:
+              $ref: "#/components/schemas/occurrence"
+definitions:
+  occurrence:
+    type: "object"
+    pieceName:
+      type: "string"
+    excerpt:
+      type: "object"
+      encoding: "string"
+      content: "string"
+    measures:
+      type: "array"
+      items:
+        type: "integer"
+    noteIndices:
+      type: "array"
+      items: 
+        type: "integer"
+    diatonicOcc:
+      type: "boolean"
+    transposition:
+      type: "integer"
