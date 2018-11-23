@@ -10,7 +10,7 @@ export class VerovioHumdrumService {
   private options = {
     inputFormat: 'humdrum',
     adjustPageHeight: 1,
-    pageHeight: 1000,
+    pageHeight: 400,
     pageWidth: 1000,
     scale: 60,
     font: "Leipzig"

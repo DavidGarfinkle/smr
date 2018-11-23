@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { AceEditorComponent } from 'ng2-ace-editor';
 
 import { VerovioHumdrumService } from '../verovio-humdrum.service';
 import { DefaultService } from 'api/api/default.service';
@@ -11,6 +12,7 @@ import { DefaultService } from 'api/api/default.service';
 })
 export class MusicEditorComponent implements AfterViewInit{
 
+  @ViewChild('editor') editor: AceEditorComponent;
   @ViewChild('svgContainer') svgContainer: ElementRef;
 
   humdrumPrefix: string = 
@@ -22,9 +24,8 @@ export class MusicEditorComponent implements AfterViewInit{
   humdrumInput: string = "";
   renderedHumdrum: string;
   results: string = "results";
-  aceOptions: any;
+  aceceOptions: any;
   svg: string;
-  music21j: any;
 
   constructor(
       private verovio: VerovioHumdrumService,
@@ -34,7 +35,12 @@ export class MusicEditorComponent implements AfterViewInit{
 
   ngAfterViewInit() {
     // Initial render
-    this.updateHumdrumInput("c4");
+    this.updateHumdrumInput('c4');
+
+    //Register on-change event listener for the editor
+    this.editor.getEditor().on('change', (delta) => {
+      this.updateHumdrumInput(this.editor.value);
+    });
   };
 
   updateHumdrumInput(val) {
@@ -46,6 +52,7 @@ export class MusicEditorComponent implements AfterViewInit{
     this.svg = this.verovio.render(this.humdrumInput);
     this.svgContainer.nativeElement.innerHTML = this.svg;
   };
+
 
   search() {
     this.searchService.search('krn', this.humdrumInput).subscribe(

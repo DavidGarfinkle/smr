@@ -1,13 +1,14 @@
 import os
 
 # basedir is one level up from flask-api/config.py
-smr_basedir = os.path.join(os.path.abspath(os.path.dirname(__file__)), os.path.pardir)
+BASEDIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), os.path.pardir)
 
 DEBUG = True
 
-MUSIC_FILES = "/usr/share/smr-db/palestrina-masses-vectors"
+PALESTRINA_VECTOR_INDEXED = "/usr/share/smr-db/palestrina-masses-vectors"
+PALESTRINA_XML = "/usr/share/smr-db/palestrina-masses-xml"
 
-static_folder = os.path.join(smr_basedir, "angular-app", "dist", "angular-app")
-STATIC_FOLDER = os.path.join(smr_basedir, "angular-app", "dist", "angular-app")
+static_folder = os.path.join(BASEDIR, "angular-app", "dist", "angular-app")
+STATIC_FOLDER = os.path.join(BASEDIR, "angular-app", "dist", "angular-app")
 TEMPLATES_FOLDER = STATIC_FOLDER
-ANGULAR = os.path.join(smr_basedir, "angular-app", "dist", "angular-app")
+ANGULAR = os.path.join(BASEDIR, "angular_app", "dist", "angular-app")

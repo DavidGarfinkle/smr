@@ -1,5 +1,5 @@
 /**
- * PatternFinder
+ * SMIR
  * Content-Based Music Retrieval
  *
  * OpenAPI spec version: 1.0.0
@@ -9,11 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { OccurrenceExcerpt } from './occurrenceExcerpt';
 
 
 export interface Occurrence { 
-    mass?: string;
-    targetNotes?: Array<number>;
+    pieceName?: string;
+    excerpt?: OccurrenceExcerpt;
+    measures?: Array<number>;
+    noteIndices?: Array<number>;
     diatonicOcc?: boolean;
     transposition?: number;
 }

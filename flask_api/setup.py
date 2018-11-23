@@ -1,6 +1,6 @@
 from distutils.core import setup
 
-setup(name='smr-flask',
+setup(name='smr_flask',
         version='0.1dev',
         description='Flask appliction serving a RESTful API to an indexed music database',
         author='David Garfinkle',

@@ -27,7 +27,7 @@ import { MusicEditorComponent } from './music-editor/music-editor.component';
   providers: [
     {
       provide: BASE_PATH,
-      useValue: "http://132.206.14.238:80"
+      useValue: "http://132.206.14.238:8000"
     }
   ],
   bootstrap: [AppComponent]

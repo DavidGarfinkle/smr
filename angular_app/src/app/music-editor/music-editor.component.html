@@ -1,9 +1,17 @@
 <div #musicEditor>
-  <div #svgContainer></div>
+  <ace-editor
+    #editor
+    [mode] = "'text'"
+    [theme] = "'eclipse'"
+    [options] = "aceOptions"
+    [autoUpdateContent] = "true"></ace-editor>
 
-  <textarea (input)="updateHumdrumInput($event.target.value)"></textarea>
+  <div id="svgContainer" #svgContainer></div>
 
-  <button
+  <!--<textarea (input)="updateHumdrumInput($event.target.value)"></textarea>-->
+
+</div>
+
+<button
 	type="submit"
 	(click)="search()">submit</button>
-</div>

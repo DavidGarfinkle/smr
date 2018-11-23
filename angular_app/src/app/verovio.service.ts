@@ -9,10 +9,14 @@ export class VerovioHumdrumService {
     
   private options = {
     inputFormat: 'humdrum',
-    adjustPageHeight: 1,
-    pageHeight: 1000,
-    pageWidth: 1000,
-    scale: 60,
+    barLineWidth: 0,
+    pageMarginTop: 0,
+    pageMarginBottom: 0,
+    pageMarginRight: 0,
+    pageMarginLeft: 0,
+    noHeader: 1,
+    noFooter: 1,
+    noJustification: 1,
     font: "Leipzig"
   };
 

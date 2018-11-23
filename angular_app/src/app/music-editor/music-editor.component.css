@@ -1,14 +1,11 @@
-div {
-  height: 500px;
-  width: 500px;
+#svgContainer {
+  display: inline-block;
+  height: 15em;
+  width: 30em;
 }
 
 ace-editor {
-  height: 100%;
-  width: 50%;
-}
-
-div > div {
-  height: 100%;
-  width: 50%;
+  display: inline-block;
+  height: 15em;
+  width: 11em;
 }

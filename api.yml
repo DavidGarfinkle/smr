@@ -1,4 +1,4 @@
-openapi: 2.0
+swagger: 2.0
 info:
   description: "Content-Based Music Retrieval"
   version: "1.0.0"
@@ -19,13 +19,11 @@ paths:
         - name: "encoding"
           in: "query"
           description: "Indicates the music encoding language of the query string"
-          schema:
-            type: "string"
+          type: "string"
         - name: "query"
           in: "query"
           description: "A music query string"
-          schema:
-            type: "string"
+          type: "string"
       responses:
         200:
           description: "The server successfully completed a search for the music query and is returning the result(s)" 
@@ -33,24 +31,61 @@ paths:
             type: "array"
             items:
               $ref: "#/components/schemas/occurrence"
+  /piece:
+    get:
+      operationId: "get-piece"
+      summary: "Request the excerpt, highlighted excerpt, or entirety of a piece in the database"
+      produces: 
+        - "application/xml"
+        - "application/svg"
+      parameters:
+        - name: "piece"
+          in: "path"
+          description: "The unique name of the piece document"
+          required: true
+          type: "string"
+        - name: "m"
+          in: "query"
+          description: "List of measure numbers for excerpt"
+          type: "array"
+          items:
+            type: "integer"
+        - name: "n"
+          in: "query"
+          description: "Indices of notes to highlight"
+          type: "array"
+          items:
+            type: "integer"
+        - name: "c"
+          in: "query"
+          description: "Colour of the highlighted notes"
+          type: "string"
+          default: "red"
+      responses:
+        200:
+          description: "Returning a piece" 
+          schema:
+            type: "string"
 definitions:
   occurrence:
     type: "object"
-    pieceName:
-      type: "string"
-    excerpt:
-      type: "object"
-      encoding: "string"
-      content: "string"
-    measures:
-      type: "array"
-      items:
+    properties:
+      pieceName:
+        type: "string"
+      excerpt:
+        type: "object"
+        properties:
+          encoding: "string"
+          content: "string"
+      measures:
+        type: "array"
+        items:
+          type: "integer"
+      noteIndices:
+        type: "array"
+        items: 
+          type: "integer"
+      diatonicOcc:
+        type: "boolean"
+      transposition:
         type: "integer"
-    noteIndices:
-      type: "array"
-      items: 
-        type: "integer"
-    diatonicOcc:
-      type: "boolean"
-    transposition:
-      type: "integer"

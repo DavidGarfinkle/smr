@@ -32,32 +32,38 @@ def note_indexer(note):
         'pitch-hz': note.pitch.frequency
     }
 
-
-def pandas_intra_vectors(piece):
+def note_index(piece):
     score = music21.converter.parse(piece)
     notes = list(NotePointSet(score))
     indexed_notes = (note_indexer(n) for n in notes)
 
-    df = pd.DataFrame(indexed_notes)
+    return pd.DataFrame(indexed_notes).sort_values(by=["offset", "pitch-b40"])
+
+def legacy_intra_vectors(piece, window):
+
+    df = note_index(piece)
 
     intervals = []
-    for window in range(1, 21):
-        vectors = df.diff(periods = window)
+    for window in range(1, window + 1):
+        vectors = df.diff(periods = window).dropna()
         vectors['window'] = window
 
         vectors['x'] = vectors['offset']
-        vectors['y'] = vectors['pitch-chr']
+        vectors['y'] = vectors['pitch-chr'].astype('int32')
         vectors['startIndex'] = vectors.index - window
         vectors['endIndex'] = vectors.index
-        vectors['startPitch'] = df['pitch-chr']
-        vectors['endPitch'] = df['pitch-chr'].shift(window)
+        vectors['startPitch'] = df['pitch-chr'].shift(window)
+        vectors['endPitch'] = df['pitch-chr']
+        vectors['chromaticDiff'] = vectors['pitch-chr'].astype('int32')
+        vectors['diatonicDiff'] = vectors['pitch-dia'].astype('int32')
 
-        intervals.append(vectors.dropna())
+        intervals.append(vectors)
 
-    return pd.concat(intervals, axis=0).sort_values(by=["offset", "pitch-hz"])
+    df = pd.concat(intervals, axis=0).sort_values(by=["y", "startIndex"])
 
+    return legacy_intra_vectors_to_csv(df)
 
-def df_to_csv(df):
+def legacy_intra_vectors_to_csv(df):
 
     file_obj = io.StringIO()
 
@@ -65,17 +71,16 @@ def df_to_csv(df):
     csv_writer.writerow(['x', 'y', 'startIndex', 'endIndex', 'startPitch', 'endPitch', 'diatonicDiff', 'chromaticDiff'])
     csv_writer.writerow([len(set(df.index))])
     csv_writer.writerow([len(df.index)])
-    for v in vectors:
-        csv_writer.writerow([v.x, v.y, v.noteStartIndex, v.noteEndIndex,
-                             v.noteStart.pitch.ps,
-                             v.noteEnd.pitch.ps,
-                             v.noteEnd.pitch.diatonicNoteNum - v.noteStart.pitch.diatonicNoteNum,
-                             int(v.noteEnd.pitch.ps - v.noteStart.pitch.ps)])
+
+    df.to_csv(
+        columns=['x', 'y', 'startIndex', 'endIndex', 'startPitch', 'endPitch', 'diatonicDiff', 'chromaticDiff'],
+        path_or_buf = file_obj,
+        index=False,
+        header=False)
 
     output = file_obj.getvalue()
     file_obj.close()
     return output
-
 
 def intra_vectors(xml_input_path: str, dest: str = '', window = 15):
 
@@ -189,4 +194,5 @@ class NotePointSet(music21.stream.Stream):
 
 
 if __name__ == "__main__":
-    df = pandas_intra_vectors("/usr/share/smr-db/palestrina-masses-xml/Ad_fugam_Credo_4.mid.xml")
+    df = legacy_intra_vectors("/usr/share/smr-db/palestrina-masses-xml/Ad_fugam_Credo_4.mid.xml")
+    csv = legacy_intra_vectors_to_csv(df)

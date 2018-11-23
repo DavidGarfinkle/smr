@@ -1,5 +1,5 @@
 /**
- * PatternFinder
+ * SMIR
  * Content-Based Music Retrieval
  *
  * OpenAPI spec version: 1.0.0
@@ -18,6 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs/Observable';
 
+import { Occurrence } from '../model/occurrence';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -26,7 +27,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class DefaultService {
 
-    protected basePath = 'https://132.206.14.238:8000';
+    protected basePath = 'http://132.206.14.238:8000';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -57,112 +58,40 @@ export class DefaultService {
 
 
     /**
+     * Request the excerpt, highlighted excerpt, or entirety of a piece in the database
      * 
-     * 
-     * @param mass Name of the mass to retrieve
+     * @param piece The unique name of the piece document
+     * @param m List of measure numbers for excerpt
+     * @param n Indices of notes to highlight
+     * @param c Colour of the highlighted notes
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getMass(mass: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public getMass(mass: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public getMass(mass: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public getMass(mass: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (mass === null || mass === undefined) {
-            throw new Error('Required parameter mass was null or undefined when calling getMass.');
+    public getPiece(piece: string, m?: Array<number>, n?: Array<number>, c?: string, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public getPiece(piece: string, m?: Array<number>, n?: Array<number>, c?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+    public getPiece(piece: string, m?: Array<number>, n?: Array<number>, c?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+    public getPiece(piece: string, m?: Array<number>, n?: Array<number>, c?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (piece === null || piece === undefined) {
+            throw new Error('Required parameter piece was null or undefined when calling getPiece.');
         }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.get<any>(`${this.configuration.basePath}/mass/${encodeURIComponent(String(mass))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 
-     * 
-     * @param mass Name of the mass to retrieve
-     * @param noteIndices Indices of notes relative to the entire score which define the boundaries of this excerpt
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getMassExcerpt(mass: string, noteIndices: Array<number>, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public getMassExcerpt(mass: string, noteIndices: Array<number>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public getMassExcerpt(mass: string, noteIndices: Array<number>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public getMassExcerpt(mass: string, noteIndices: Array<number>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (mass === null || mass === undefined) {
-            throw new Error('Required parameter mass was null or undefined when calling getMassExcerpt.');
-        }
-        if (noteIndices === null || noteIndices === undefined) {
-            throw new Error('Required parameter noteIndices was null or undefined when calling getMassExcerpt.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.get<any>(`${this.configuration.basePath}/mass/${encodeURIComponent(String(mass))}/excerpt/${encodeURIComponent(String(noteIndices))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * 
-     * 
-     * @param inputType Indicates the music encoding language of the query string
-     * @param krnText A music query string
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public search(inputType?: string, krnText?: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public search(inputType?: string, krnText?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public search(inputType?: string, krnText?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public search(inputType?: string, krnText?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (inputType !== undefined && inputType !== null) {
-            queryParameters = queryParameters.set('inputType', <any>inputType);
+        if (m) {
+            queryParameters = queryParameters.set('m', m.join(COLLECTION_FORMATS['csv']));
         }
-        if (krnText !== undefined && krnText !== null) {
-            queryParameters = queryParameters.set('krnText', <any>krnText);
+        if (n) {
+            queryParameters = queryParameters.set('n', n.join(COLLECTION_FORMATS['csv']));
+        }
+        if (c !== undefined && c !== null) {
+            queryParameters = queryParameters.set('c', <any>c);
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'application/xml',
+            'application/svg'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -173,7 +102,55 @@ export class DefaultService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<any>(`${this.configuration.basePath}/search`,
+        return this.httpClient.get<string>(`${this.configuration.basePath}/piece`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Request the service to perform a content-based music retrieval search
+     * 
+     * @param encoding Indicates the music encoding language of the query string
+     * @param query A music query string
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public search(encoding?: string, query?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Occurrence>>;
+    public search(encoding?: string, query?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Occurrence>>>;
+    public search(encoding?: string, query?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Occurrence>>>;
+    public search(encoding?: string, query?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (encoding !== undefined && encoding !== null) {
+            queryParameters = queryParameters.set('encoding', <any>encoding);
+        }
+        if (query !== undefined && query !== null) {
+            queryParameters = queryParameters.set('query', <any>query);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'text/html',
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.get<Array<Occurrence>>(`${this.configuration.basePath}/search`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

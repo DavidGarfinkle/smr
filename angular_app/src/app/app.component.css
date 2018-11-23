@@ -1,11 +1,11 @@
 .app-music-editor-container {
   display: flex;
-  align-items: center;
-  justify-items: center;
+  flex-direction: row;
 }
 
 app-music-editor {
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
+  display: flex;
+  flex-direction: row;
+  height: 30em;
 }
+
