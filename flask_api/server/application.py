@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, Response, jsonify, send_from_directory
 
 from server.exceptions import *
 
@@ -45,14 +45,15 @@ def search_json():
 
 @app.route("/piece/<piece_name>")
 def get_piece(piece_name):
-    from server.controllers.piece import piece_excerpt_svg, piece_excerpt_xml
+    from server.controllers.piece import piece_excerpt_svg, highlighted_excerpt_xml
 
     if not request.args.get("n"):
         return send_from_directory(app.config["PALESTRINA_XML"], "{}.mid.xml".format(piece_name))
 
-    if "application/svg" in request.accept_mimetypes:
-        return piece_excerpt_svg()
+    # TODO application/svg appears in accept_mimetypes even when not declared by requesting client?
+    #if "application/svg" in request.accept_mimetypes:
+    #    return piece_excerpt_svg()
 
     return Response(
-        highlighted_excerpt_xml(piece_name, note_indices = request.args.get("n"), color = request.args.get("c")),
+        highlighted_excerpt_xml(piece_name, note_indices = request.args.get("n").split(","), color = request.args.get("c")),
         mimetype="application/xml")

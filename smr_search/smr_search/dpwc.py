@@ -62,6 +62,13 @@ def filter_window(result, window):
     notes = result['targetNotes']
     return sum(r - l <= window for l, r in zip(notes, notes[1:])) == len(notes) - 1
 
+def filter_diatonic(result, diatonic):
+    """
+    If diatonic == True, filter only for diatonic occurrences
+    Otherwise return both chromatic and diatonic occurrences
+    """
+    return result['diatonicOcc'] if diatonic else True
+
 def rank(result):
     notes = result['targetNotes']
     return len(notes) + sum(r - l for l, r in zip(notes, notes[1:]))
@@ -71,8 +78,8 @@ def rank_results(results):
       r['rank'] = rank(r)
     return sorted(results, key=lambda r: r['rank'])
 
-def paginate(results, page_length, threshold, window):
-    filtered_results = [r for r in results if filter_window(r, window) and filter_threshold(r, threshold)]
+def paginate(results, page_length, threshold, window, diatonic):
+    filtered_results = [r for r in results if (filter_window(r, window) and filter_threshold(r, threshold) and filter_diatonic(r, diatonic))]
     ranked_results = rank_results(results)
 
     num_pages = int(math.ceil(len(ranked_results) / float(page_length)))

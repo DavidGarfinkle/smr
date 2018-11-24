@@ -1,5 +1,8 @@
 import sys
+import os
 import music21
+
+from flask import current_app as app
 
 def piece_excerpt_svg():
     """
@@ -7,17 +10,17 @@ def piece_excerpt_svg():
     """
     pass
 
-def highlighted_excerpt_xml(piece_name, measures, note_indices, color):
+def highlighted_excerpt_xml(piece_name, note_indices, color):
     """
     Provide an excerpt, highlighted excerpt, or entire piece from the database
     """
-    from search.indexers import NotePointSet
+    from smr_search.indexers import NotePointSet
     from io import StringIO
 
-    score = music21.converter.parse(app.config["PALESTRINA_XML"], "{}.mid.xml".format(piece_name))
+    score = music21.converter.parse(os.path.join(app.config["PALESTRINA_XML"], "{}.mid.xml".format(piece_name)))
     pointset = list(NotePointSet(score).flat.notes)
 
-    pointset_indices = [int(i) for i in highlight_notes.split(',')]
+    pointset_indices = [int(i) for i in note_indices]
     score_note_ids = [pointset[i].original_note_id for i in pointset_indices]
 
     # Get stream excerpt
@@ -28,7 +31,7 @@ def highlighted_excerpt_xml(piece_name, measures, note_indices, color):
     # Colour notes
     for note in excerpt.flat.notes:
         if note.id in score_note_ids:
-            note.style.color = 'red'
+            note.style.color = color
 
     # Delete part names (midi files have bad data)
     for part in excerpt:
