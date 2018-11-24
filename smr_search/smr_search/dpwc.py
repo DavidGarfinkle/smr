@@ -1,6 +1,7 @@
 import sys
 import os
 import io
+import math
 import json
 import logging
 import tqdm
@@ -38,8 +39,7 @@ def search(pattern_str, mass_path):
         # Result is a JSON list of objects
         for occ in result:
             # mass is a path which ends in the XML file of that mass
-            occ['mass'] = mass_path.split('/')[-1].split('.')[0]
-            occ['loaded'] = False
+            occ['piece'] = mass_path.split('/')[-1].split('.')[0]
     return result
 
 def search_scores(pattern_str, palestrina_path):
@@ -54,3 +54,33 @@ def search_scores(pattern_str, palestrina_path):
     response = [occ for sublst in [search(pattern_str, mass) for mass in masses] for occ in sublst]
 
     return response or []
+
+def filter_threshold(result, threshold):
+    return len(result['targetNotes']) > threshold
+
+def filter_window(result, window):
+    notes = result['targetNotes']
+    return sum(r - l <= window for l, r in zip(notes, notes[1:])) == len(notes) - 1
+
+def rank(result):
+    notes = result['targetNotes']
+    return len(notes) + sum(r - l for l, r in zip(notes, notes[1:]))
+
+def rank_results(results):
+    for r in results:
+      r['rank'] = rank(r)
+    return sorted(results, key=lambda r: r['rank'])
+
+def paginate(results, page_length, threshold, window):
+    filtered_results = [r for r in results if filter_window(r, window) and filter_threshold(r, threshold)]
+    ranked_results = rank_results(results)
+
+    num_pages = int(math.ceil(len(ranked_results) / float(page_length)))
+    response = {
+        'count': len(ranked_results),
+        'pages': [{
+                'pageNum': i,
+                'occurrences': ranked_results[i * page_length : i * page_length + page_length]}
+            for i in range(num_pages)]
+    }
+    return response

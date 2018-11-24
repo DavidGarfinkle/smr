@@ -1,6 +1,7 @@
 import os
 from flask import Flask, request, jsonify, send_from_directory
 
+from server.exceptions import *
 
 app = Flask(__name__)
 app.config.from_object("config")
@@ -31,7 +32,10 @@ def search_json():
     query_string = request.args.get('query')
 
     app.logger.info("Got request with query: \n{}".format(query_string))
-    results = search_controller(music_encoding, query_string, app.config["PALESTRINA_VECTOR_INDEXED"])
+    try:
+        results = search_controller(music_encoding, query_string, app.config["PALESTRINA_VECTOR_INDEXED"])
+    except BadQueryError as e:
+        return e.html_response, e.status_code
 
     app.logger.info("Jsonifying results...")
     jsonresults = jsonify(results)

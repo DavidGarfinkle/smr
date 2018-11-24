@@ -118,13 +118,15 @@ export class DefaultService {
      * 
      * @param encoding Indicates the music encoding language of the query string
      * @param query A music query string
+     * @param minOccLength Filter results for minimum length
+     * @param maxTargetWindow Filter results for a maximum sorted distance between highlighted notes
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public search(encoding?: string, query?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Occurrence>>;
-    public search(encoding?: string, query?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Occurrence>>>;
-    public search(encoding?: string, query?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Occurrence>>>;
-    public search(encoding?: string, query?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public search(encoding?: string, query?: string, minOccLength?: number, maxTargetWindow?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Occurrence>>;
+    public search(encoding?: string, query?: string, minOccLength?: number, maxTargetWindow?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Occurrence>>>;
+    public search(encoding?: string, query?: string, minOccLength?: number, maxTargetWindow?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Occurrence>>>;
+    public search(encoding?: string, query?: string, minOccLength?: number, maxTargetWindow?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (encoding !== undefined && encoding !== null) {
@@ -132,6 +134,12 @@ export class DefaultService {
         }
         if (query !== undefined && query !== null) {
             queryParameters = queryParameters.set('query', <any>query);
+        }
+        if (minOccLength !== undefined && minOccLength !== null) {
+            queryParameters = queryParameters.set('minOccLength', <any>minOccLength);
+        }
+        if (maxTargetWindow !== undefined && maxTargetWindow !== null) {
+            queryParameters = queryParameters.set('maxTargetWindow', <any>maxTargetWindow);
         }
 
         let headers = this.defaultHeaders;

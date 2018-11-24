@@ -9,12 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { Occurrence } from './occurrence';
 
 
-export interface Occurrence { 
-    pieceName?: string;
-    targetNotes?: Array<number>;
-    diatonicOcc?: boolean;
-    transposition?: number;
-    rank?: number;
+export interface PaginatedResultsPages { 
+    occurrences?: Array<Occurrence>;
+    pageNum?: number;
 }

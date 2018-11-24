@@ -32,9 +32,9 @@ def note_indexer(note):
         'pitch-hz': note.pitch.frequency
     }
 
-def note_index(piece):
-    score = music21.converter.parse(piece)
-    notes = list(NotePointSet(score))
+def note_index(m21_score):
+
+    notes = list(NotePointSet(m21_score))
     indexed_notes = (note_indexer(n) for n in notes)
 
     return pd.DataFrame(indexed_notes).sort_values(by=["offset", "pitch-b40"])

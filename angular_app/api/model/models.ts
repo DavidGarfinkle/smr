@@ -1,2 +1,3 @@
 export * from './occurrence';
-export * from './occurrenceExcerpt';
+export * from './paginatedResults';
+export * from './paginatedResultsPages';

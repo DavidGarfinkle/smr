@@ -10,7 +10,7 @@ import { DefaultService } from 'api/api/default.service';
   templateUrl: './music-editor.component.html',
   styleUrls: ['./music-editor.component.css']
 })
-export class MusicEditorComponent implements AfterViewInit{
+export class MusicEditorComponent implements AfterViewInit {
 
   @ViewChild('editor') editor: AceEditorComponent;
   @ViewChild('svgContainer') svgContainer: ElementRef;

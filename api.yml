@@ -24,13 +24,21 @@ paths:
           in: "query"
           description: "A music query string"
           type: "string"
+        - name: "minOccLength"
+          in: "query"
+          description: "Filter results for minimum length"
+          type: "integer" 
+        - name: "maxTargetWindow"
+          in: "query"
+          description: "Filter results for a maximum sorted distance between highlighted notes"
+          type: "integer"
       responses:
         200:
           description: "The server successfully completed a search for the music query and is returning the result(s)" 
           schema:
             type: "array"
             items:
-              $ref: "#/components/schemas/occurrence"
+              $ref: "#/definitions/occurrence"
   /piece:
     get:
       operationId: "get-piece"
@@ -67,25 +75,34 @@ paths:
           schema:
             type: "string"
 definitions:
+  paginatedResults:
+    type: "object"
+    properties:
+      count:
+        type: "integer"
+      pages:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            pageNum:
+              type: "integer"
+            occurrences:
+              type: "array"
+              items:
+                $ref: "#/definitions/occurrence"
   occurrence:
     type: "object"
     properties:
       pieceName:
         type: "string"
-      excerpt:
-        type: "object"
-        properties:
-          encoding: "string"
-          content: "string"
-      measures:
-        type: "array"
-        items:
-          type: "integer"
-      noteIndices:
+      targetNotes:
         type: "array"
         items: 
           type: "integer"
       diatonicOcc:
         type: "boolean"
       transposition:
+        type: "integer"
+      rank:
         type: "integer"
