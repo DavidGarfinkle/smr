@@ -4,7 +4,7 @@ import music21
 from flask import Response, request, url_for
 
 from smr_search.indexers import legacy_intra_vectors
-from smr_search.dpwc import search_scores, paginate
+from smr_search.dpwc import search_scores, paginate, filter_results, rank_results
 from server.exceptions import BadQueryError
 
 logger = logging.getLogger("flask.app")
@@ -20,11 +20,15 @@ def search_controller(music_encoding, query_string, dataloc):
     logger.info("controllers.search::search_controler() --- searching in {1} for \n{0}".format(query_string, dataloc))
     results = search_scores(indexed_query, dataloc)
 
+    filtered_results = filter_results(results, threshold = 1, window = 3, diatonic = True)
+    ranked_results = rank_results(results)
+
     for r in results:
         attach_excerpt_url(r)
 
     #return paginate(results, page_length = 10, threshold = request.args.get('threshold'), window = request.args.get('sourceWindow'))
-    return paginate(results, page_length = 10, threshold = 1, window = 3, diatonic = True)
+    #return paginate(results, page_length = 10)
+    return results
 
 def attach_excerpt_url(result):
     result['excerptUrl'] = url_for('get_piece', piece_name = result['piece'], n = ",".join(str(x) for x in result['targetNotes']), c = 'red')

@@ -61,24 +61,20 @@ export class DefaultService {
      * Request the excerpt, highlighted excerpt, or entirety of a piece in the database
      * 
      * @param piece The unique name of the piece document
-     * @param m List of measure numbers for excerpt
      * @param n Indices of notes to highlight
      * @param c Colour of the highlighted notes
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPiece(piece: string, m?: Array<number>, n?: Array<number>, c?: string, observe?: 'body', reportProgress?: boolean): Observable<string>;
-    public getPiece(piece: string, m?: Array<number>, n?: Array<number>, c?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
-    public getPiece(piece: string, m?: Array<number>, n?: Array<number>, c?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
-    public getPiece(piece: string, m?: Array<number>, n?: Array<number>, c?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getPiece(piece: string, n?: Array<number>, c?: string, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public getPiece(piece: string, n?: Array<number>, c?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+    public getPiece(piece: string, n?: Array<number>, c?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+    public getPiece(piece: string, n?: Array<number>, c?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (piece === null || piece === undefined) {
             throw new Error('Required parameter piece was null or undefined when calling getPiece.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (m) {
-            queryParameters = queryParameters.set('m', m.join(COLLECTION_FORMATS['csv']));
-        }
         if (n) {
             queryParameters = queryParameters.set('n', n.join(COLLECTION_FORMATS['csv']));
         }

@@ -71,17 +71,19 @@ def filter_diatonic(result, diatonic):
 
 def rank(result):
     notes = result['targetNotes']
-    return len(notes) + sum(r - l for l, r in zip(notes, notes[1:]))
+    # Penalize for more note skips
+    # Add exponential points for length
+    return sum(r - l for l, r in zip(notes, notes[1:])) - pow(len(notes), 2)
 
 def rank_results(results):
     for r in results:
       r['rank'] = rank(r)
     return sorted(results, key=lambda r: r['rank'])
 
-def paginate(results, page_length, threshold, window, diatonic):
+def filter_results(results, threshold, window, diatonic):
     filtered_results = [r for r in results if (filter_window(r, window) and filter_threshold(r, threshold) and filter_diatonic(r, diatonic))]
-    ranked_results = rank_results(results)
 
+def paginate(results, page_length):
     num_pages = int(math.ceil(len(ranked_results) / float(page_length)))
     response = {
         'count': len(ranked_results),

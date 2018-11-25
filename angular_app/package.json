@@ -27,6 +27,7 @@
     "core-js": "^2.5.4",
     "music21j": "file:vendors/music21j",
     "ng2-ace-editor": "^0.3.8",
+    "ngx-pagination": "^3.2.1",
     "openapi-codegen": "^1.5.1",
     "rxjs": "~6.2.0",
     "rxjs-compat": "^6.3.2",

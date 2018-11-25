@@ -4,6 +4,7 @@ import { AceEditorComponent } from 'ng2-ace-editor';
 
 import { VerovioHumdrumService } from '../verovio-humdrum.service';
 import { DefaultService } from 'api/api/default.service';
+import { ResultsManagerService } from '../results-manager.service';
 
 @Component({
   selector: 'app-music-editor',
@@ -30,7 +31,7 @@ export class MusicEditorComponent implements AfterViewInit {
   constructor(
       private verovio: VerovioHumdrumService,
       private sanitizer: DomSanitizer,
-      private searchService: DefaultService
+      private resultsManager: ResultsManagerService
   ) { };
 
   ngAfterViewInit() {
@@ -45,6 +46,7 @@ export class MusicEditorComponent implements AfterViewInit {
 
   updateHumdrumInput(val) {
     this.humdrumInput = this.humdrumPrefix + val;
+    this.resultsManager.query = this.humdrumInput;
     this.renderHumdrum();
   }
 
@@ -55,8 +57,10 @@ export class MusicEditorComponent implements AfterViewInit {
 
 
   search() {
-    this.searchService.search('krn', this.humdrumInput).subscribe(
-      data => { console.log(data) });
+    this.resultsManager.search();
+    this.resultsManager.results.subscribe(
+        data => { console.log(data) }
+    );
   }
 
 }

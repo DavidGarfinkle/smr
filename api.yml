@@ -52,12 +52,6 @@ paths:
           description: "The unique name of the piece document"
           required: true
           type: "string"
-        - name: "m"
-          in: "query"
-          description: "List of measure numbers for excerpt"
-          type: "array"
-          items:
-            type: "integer"
         - name: "n"
           in: "query"
           description: "Indices of notes to highlight"
