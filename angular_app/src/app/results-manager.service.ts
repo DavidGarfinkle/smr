@@ -25,6 +25,8 @@ export class ResultsManagerService implements OnInit {
 
   private verovioOptions = {
     inputFormat: 'xml',
+    noHeader: 1,
+    noFooter: 1
   }
 
   constructor(
@@ -44,6 +46,7 @@ export class ResultsManagerService implements OnInit {
         this.count = res.count;
         this.searched = true;
         this.getSvgExcerpts(0);
+        this.getSvgExcerpts(1);
       ));
   }
 
