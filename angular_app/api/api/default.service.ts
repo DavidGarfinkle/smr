@@ -98,13 +98,14 @@ export class DefaultService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.get<string>(`${this.configuration.basePath}/piece`,
+        return this.httpClient.get<string>(`${this.configuration.basePath}/piece/${piece}`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
-                reportProgress: reportProgress
+                reportProgress: reportProgress,
+                responseType: 'text'
             }
         );
     }

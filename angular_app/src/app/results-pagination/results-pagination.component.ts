@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Sanitizer } from '@angular/core';
 
 import { pipe, Observable } from 'rxjs';
 import { map, mergeMap, elementAt, pluck, tap } from 'rxjs/operators';
@@ -19,19 +19,20 @@ export class ResultsPaginationComponent implements OnInit {
   pageSize: number = 10;
   collection: any;  
   svgExcerpts: any;
-  count: Observable<number>;
+  count: number;
   loading: boolean = false;
   
   constructor(
 	private resultsManager: ResultsManagerService,
     private service: DefaultService,
-    private verovio: VerovioHumdrumService
+    private verovio: VerovioHumdrumService,
+    private sanitizer: Sanitizer
   ) { }
 
 
   ngOnInit() {
-    this.svgExcerpts = this.resultsManager.svgExcerpts;
-    this.count = this.resultsManager.count;
+    this.svgExcerpts = [];
+    this.count = 0;
   }
 /*
   getExcerpt(item: any) { 
@@ -58,6 +59,9 @@ export class ResultsPaginationComponent implements OnInit {
     return excerpts;
   }
 */
+  safe(svg) {
+    return this.sanitizer.bypassSecurityTrustHtml(svg);
+  }
 
   pageChange(pageNum: number) {
     this.p = pageNum;

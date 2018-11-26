@@ -57,8 +57,7 @@ export class MusicEditorComponent implements AfterViewInit {
 
 
   search() {
-    this.resultsManager.search();
-    this.resultsManager.results.subscribe(
+    this.resultsManager.search().subscribe(
         data => { console.log(data) }
     );
   }

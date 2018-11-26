@@ -22,7 +22,7 @@ export class VerovioHumdrumService {
     this.tk = new verovio.toolkit();
   }
 
-  render(data: string) {
+  public render(data: string) {
     return this.tk.renderData(data, this.options);
   }
 

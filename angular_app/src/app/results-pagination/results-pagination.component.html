@@ -1,6 +1,5 @@
-<ul>
-    <li *ngFor="let item of svgExcerpts | async | paginate: { id: 'results', itemsPerPage: pageSize, currentPage: p, totalItems: count | async }">
-        {{ item }}
+<ul *ngIf="resultsManager.searched">
+    <li *ngFor="let item of resultsManager.results.pages[p-1].occurrences | paginate: { id: 'results', itemsPerPage: pageSize, currentPage: p, totalItems: resultsManager.results.count }" [innerHTML]="safe(item.svg)">
     </li>
 </ul>
                
