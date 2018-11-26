@@ -1,9 +1,11 @@
 import os
 from flask import Flask, request, Response, jsonify, send_from_directory
+from flask_cors import CORS
 
 from server.exceptions import *
 
 app = Flask(__name__)
+CORS(app)
 app.config.from_object("config")
 
 @app.route("/<path>")

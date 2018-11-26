@@ -1,5 +1,7 @@
 <ul>
-    <li *ngFor="let item of resultsManager.results | async | paginate: { itemsPerPage: 10, currentPage: p }"> {{ getExcerpt(item) | async }} </li>
+    <li *ngFor="let item of svgExcerpts | async | paginate: { id: 'results', itemsPerPage: pageSize, currentPage: p, totalItems: count | async }">
+        {{ item }}
+    </li>
 </ul>
                
-<pagination-controls (pageChange)="p = $event"></pagination-controls>
+<pagination-controls id="results" (pageChange)="pageChange($event)"></pagination-controls>

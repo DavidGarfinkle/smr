@@ -11,6 +11,8 @@ logger = logging.getLogger("flask.app")
 
 def search_controller(music_encoding, query_string, dataloc):
     query = music21.converter.parse(query_string)
+    window = int(request.args.get("maxTargetWindow"))
+    threshold = int(request.args.get("minOccLength"))
 
     if len(query.flat.notes) < 3:
         raise BadQueryError("Query must be at least three notes long!")
@@ -20,15 +22,14 @@ def search_controller(music_encoding, query_string, dataloc):
     logger.info("controllers.search::search_controler() --- searching in {1} for \n{0}".format(query_string, dataloc))
     results = search_scores(indexed_query, dataloc)
 
-    filtered_results = filter_results(results, threshold = 1, window = 3, diatonic = True)
+    filtered_results = filter_results(results, threshold = threshold, window = window, diatonic = True)
     ranked_results = rank_results(results)
 
     for r in results:
         attach_excerpt_url(r)
 
-    #return paginate(results, page_length = 10, threshold = request.args.get('threshold'), window = request.args.get('sourceWindow'))
-    #return paginate(results, page_length = 10)
-    return results
+    return paginate(ranked_results, page_length = 10)
+    #return results
 
 def attach_excerpt_url(result):
     result['excerptUrl'] = url_for('get_piece', piece_name = result['piece'], n = ",".join(str(x) for x in result['targetNotes']), c = 'red')

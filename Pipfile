@@ -15,6 +15,7 @@ pandas = "*"
 smr-search = {editable = true, path = "./smr_search"}
 smr-flask = {path = "./flask_api", editable = true}
 tqdm = "*"
+flask-cors = "*"
 
 [requires]
 python_version = "3.5"

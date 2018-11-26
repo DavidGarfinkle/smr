@@ -84,12 +84,12 @@ def filter_results(results, threshold, window, diatonic):
     filtered_results = [r for r in results if (filter_window(r, window) and filter_threshold(r, threshold) and filter_diatonic(r, diatonic))]
 
 def paginate(results, page_length):
-    num_pages = int(math.ceil(len(ranked_results) / float(page_length)))
+    num_pages = int(math.ceil(len(results) / float(page_length)))
     response = {
-        'count': len(ranked_results),
+        'count': len(results),
         'pages': [{
                 'pageNum': i,
-                'occurrences': ranked_results[i * page_length : i * page_length + page_length]}
+                'occurrences': results[i * page_length : i * page_length + page_length]}
             for i in range(num_pages)]
     }
     return response
