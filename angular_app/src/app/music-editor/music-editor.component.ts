@@ -46,8 +46,10 @@ export class MusicEditorComponent implements AfterViewInit {
 
   updateHumdrumInput(val) {
     console.log("Humdrum Input is: \n" + val);
-    this.humdrumInput = this.humdrumPrefix + this.invertHumdrumInput(val);
-    console.log("Inverted Input is: \n" + this.invertHumdrumInput(val));
+      //let invertedHumdrumInput: String = this.invertHumdrumInput(val);
+      //console.log("Inverted Input is: \n" + invertedHumdrumInput(val));
+
+    this.humdrumInput = this.humdrumPrefix + val;
     this.resultsManager.query = this.humdrumInput;
     this.renderHumdrum();
   }
@@ -55,12 +57,20 @@ export class MusicEditorComponent implements AfterViewInit {
   invertHumdrumInput(input) {
     let lines: String[][] = [[]];
     let tmp: String;
-    for (let line of input.split("\n")) {
-      lines.push(line.split(" "));
+
+    let res: String[] = input.split("\n");
+    for (var i = 0; i < res.length; i++) {
+      console.log(res[i]);
+      lines.push(res[i].split(" "));
     }
+    console.log(lines);
 
     for (var i = 0; i < lines.length; i++) {
       for (var j = 0; j < lines[i].length; j++) {
+        console.log("i: " + i + ", j: " + j)
+        console.log("lines[i][j]: " + lines[i][j] + ", lines[j][i]:" + lines[j][i]);
+        console.log("lines.length" + lines.length);
+        console.log("lines[i].length" + lines[i].length);
         tmp = lines[i][j];
         lines[i][j] = lines[j][i];
         lines[j][i] = tmp;

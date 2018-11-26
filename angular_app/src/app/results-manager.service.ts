@@ -22,9 +22,11 @@ export class ResultsManagerService implements OnInit {
   public query: string;
   public count: number = 0;
   public searched: boolean = false;
+  public searching: boolean = false;
 
   private verovioOptions = {
     inputFormat: 'xml',
+    scale: 40,
     noHeader: 1,
     noFooter: 1
   }
@@ -40,6 +42,7 @@ export class ResultsManagerService implements OnInit {
   }
 
   public search() {
+    this.searching = true;
     return this.searchService.search(this.encoding, this.query, this.threshold, this.window).pipe(
       tap((res) => {
         this.results = res;
@@ -47,6 +50,7 @@ export class ResultsManagerService implements OnInit {
         this.searched = true;
         this.getSvgExcerpts(0);
         this.getSvgExcerpts(1);
+        this.searching = false;
       ));
   }
 

@@ -1,17 +1,60 @@
 <div #musicEditor>
-  <ace-editor
-    #editor
-    [mode] = "'text'"
-    [theme] = "'eclipse'"
-    [options] = "aceOptions"
-    [autoUpdateContent] = "true"></ace-editor>
+  <div class="container">
+    <div class="row">
+      <div class="col-3">
+          <ace-editor
+            #editor
+            [mode] = "'text'"
+            [theme] = "'eclipse'"
+            [options] = "aceOptions"
+            [autoUpdateContent] = "true"></ace-editor>
+      </div>
 
-  <div id="svgContainer" #svgContainer></div>
+      <div class="col-8">
+          <div id="svgContainer" #svgContainer></div>
+      </div>
+
+      <div class="col-1">
+          <button (click)="search()">
+              <i *ngIf="!resultsManager.searching" class="fa fa-search"></i>
+              <i *ngIf="resultsManager.searching" class="fa fa-spinner spinning"></i>
+          </button>
+      </div>
+  </div>
+</div>
+
+<!--
+<div #musicEditor>
+  <mat-grid-list cols="8" rowHeight="40em">
+
+    <mat-grid-tile colspan="2" rowspan="1">
+      <ace-editor
+        #editor
+        [mode] = "'text'"
+        [theme] = "'eclipse'"
+        [options] = "aceOptions"
+        [autoUpdateContent] = "true"></ace-editor>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="4" rowspan="1">
+      <div id="svgContainer" #svgContainer></div>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2" rowspan="1">
+      <button mat-icon-button (click)="search()">
+        <mat-icon class="material-icons">search</mat-icon>
+      </button>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+
+</div>
+-->
 
   <!--<textarea (input)="updateHumdrumInput($event.target.value)"></textarea>-->
 
-</div>
 
-<button
+<!-- <button
 	type="submit"
-	(click)="search()">submit</button>
+    (click)="search()">submit</button>-->
+

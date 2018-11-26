@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { MatButtonModule } from '@angular/material/button';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AceEditorModule } from 'ng2-ace-editor';
@@ -23,6 +24,7 @@ import { ResultsPaginationComponent } from './results-pagination/results-paginat
   imports: [
     BrowserModule,
 	NgxPaginationModule,
+    MatButtonModule,
     HttpClientModule,
     NgbModule,
     AceEditorModule,

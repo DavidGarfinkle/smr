@@ -1,6 +1,8 @@
-<ul *ngIf="resultsManager.searched">
-    <li *ngFor="let item of resultsManager.results.pages[p-1].occurrences | paginate: { id: 'results', itemsPerPage: pageSize, currentPage: p, totalItems: resultsManager.results.count }" [innerHTML]="safe(item.svg)">
-    </li>
-</ul>
-               
-<pagination-controls id="results" (pageChange)="pageChange($event)"></pagination-controls>
+<div *ngIf="resultsManager.searched">
+    <ul>
+        <li *ngFor="let item of resultsManager.results.pages[p-1].occurrences | paginate: { id: 'results', itemsPerPage: pageSize, currentPage: p, totalItems: resultsManager.results.count }" [innerHTML]="safe(item.svg)">
+        </li>
+    </ul>
+                   
+    <pagination-controls id="results" (pageChange)="pageChange($event)"></pagination-controls>
+</div>

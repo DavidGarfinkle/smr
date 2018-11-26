@@ -6,6 +6,15 @@
 
 ace-editor {
   display: inline-block;
-  height: 15em;
-  width: 11em;
+  height: 20em;
+  width: 15em;
+}
+
+.spinning {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
