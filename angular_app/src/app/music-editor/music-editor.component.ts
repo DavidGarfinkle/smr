@@ -45,10 +45,35 @@ export class MusicEditorComponent implements AfterViewInit {
   };
 
   updateHumdrumInput(val) {
-    this.humdrumInput = this.humdrumPrefix + val;
+    console.log("Humdrum Input is: \n" + val);
+    this.humdrumInput = this.humdrumPrefix + this.invertHumdrumInput(val);
+    console.log("Inverted Input is: \n" + this.invertHumdrumInput(val));
     this.resultsManager.query = this.humdrumInput;
     this.renderHumdrum();
   }
+
+  invertHumdrumInput(input) {
+    let lines: String[][] = [[]];
+    let tmp: String;
+    for (let line of input.split("\n")) {
+      lines.push(line.split(" "));
+    }
+
+    for (var i = 0; i < lines.length; i++) {
+      for (var j = 0; j < lines[i].length; j++) {
+        tmp = lines[i][j];
+        lines[i][j] = lines[j][i];
+        lines[j][i] = tmp;
+      }
+    }
+
+    for (var i=0; i < lines.length; i++) {
+      lines[i] = lines[i].join(' ');
+    }
+
+    return lines.join("\n")
+  }
+
 
   renderHumdrum() {
     this.svg = this.verovio.render(this.humdrumInput);
