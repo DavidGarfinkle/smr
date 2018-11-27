@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -13,16 +14,19 @@ import { AppComponent } from './app.component';
 import { ExcerptComponent } from './excerpt/excerpt.component';
 import { MusicEditorComponent } from './music-editor/music-editor.component';
 import { ResultsPaginationComponent } from './results-pagination/results-pagination.component';
+import { SearchParametersComponent } from './search-parameters/search-parameters.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ExcerptComponent,
     MusicEditorComponent,
-    ResultsPaginationComponent
+    ResultsPaginationComponent,
+    SearchParametersComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
 	NgxPaginationModule,
     MatButtonModule,
     HttpClientModule,

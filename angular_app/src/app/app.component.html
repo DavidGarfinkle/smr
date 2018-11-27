@@ -1,30 +1,45 @@
-<nav id="header" class="navbar navbar-light">
-  <div class="container">
+<div id="header">
+    <nav class="navbar navbar-light">
+      <div class="container">
 
-    <div class="navbar-brand">PatternFinder</div>
+        <div class="navbar-brand">PatternFinder</div>
 
-    <ul class="nav mr-auto">
+        <ul class="nav mr-auto">
 
-      <li class="nav-item">
-        <a target="_blank" class="nav-link" href="about/">About</a>
-      </li>
+          <li class="nav-item">
+            <a target="_blank" class="nav-link" href="about/">About</a>
+          </li>
 
-      <li class="nav-item">
-        <a target="_blank" class="nav-link" href="https://github.com/ELVIS-Project/PatternFinder">Github</a> 
-      </li>
+          <li class="nav-item">
+            <a target="_blank" class="nav-link" href="https://github.com/ELVIS-Project/PatternFinder">Github</a> 
+          </li>
 
-    </ul>
+        </ul>
 
-    <span target="_blank" class="nav-text navbar-right"><img id="simssa-logo" src="https://simssa.ca/_themes/simssa/img/SIMSSA_logo-01.png"/></span>
+        <span target="_blank" class="nav-text navbar-right"><img id="simssa-logo" src="https://simssa.ca/_themes/simssa/img/SIMSSA_logo-01.png"/></span>
 
-  </div>
-</nav>
-
-<div class="app-music-editor-container">
-    <app-music-editor></app-music-editor>
+      </div>
+    </nav>
 </div>
 
-<app-results-pagination></app-results-pagination>
+<div id="body" class="container">
+    <div id="row1" class="row">
+        <div class="col-md-8">
+            <app-music-editor></app-music-editor>
+        </div>
+        <div class="col-md-4">
+            <app-search-parameters></app-search-parameters>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <app-results-pagination></app-results-pagination>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
 
 <div id="footer">
 	<div class="footer">

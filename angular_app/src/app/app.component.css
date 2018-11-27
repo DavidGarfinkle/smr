@@ -2,12 +2,9 @@
   display: flex;
   flex-direction: row;
 }
-
-app-music-editor {
-  display: flex;
-  flex-direction: row;
-  height: 30em;
-}
+#body #row1 {
+  height: 20em;
+} 
 
 #footer .menu {
     padding: 0;

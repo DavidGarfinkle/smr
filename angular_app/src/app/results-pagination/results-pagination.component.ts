@@ -7,6 +7,7 @@ import { from } from 'rxjs/observable/from';
 import { ResultsManagerService } from '../results-manager.service';
 import { DefaultService } from 'api/api/default.service';
 import { VerovioHumdrumService } from '../verovio-humdrum.service';
+import { BASE_PATH } from '../../../api/variables';
 
 @Component({
   selector: 'app-results-pagination',
@@ -21,6 +22,7 @@ export class ResultsPaginationComponent implements OnInit {
   svgExcerpts: any;
   count: number;
   loading: boolean = false;
+  api_base_path: String = BASE_PATH;
   
   constructor(
 	private resultsManager: ResultsManagerService,
@@ -60,7 +62,13 @@ export class ResultsPaginationComponent implements OnInit {
   }
 */
   safe(svg) {
-    return this.sanitizer.bypassSecurityTrustHtml(svg);
+    if (svg !== null) {
+        return this.sanitizer.bypassSecurityTrustHtml(svg);
+    }
+    else {
+        return "Loading..."
+    }
+
   }
 
   pageChange(pageNum: number) {

@@ -9,6 +9,12 @@ import { ajax } from 'rxjs/ajax';
 import { Observable, EMPTY, of, pipe } from 'rxjs';
 import { pluck, tap, elementAt } from 'rxjs/operators';
 
+export enum Transposition {
+  ALL,
+  NONE,
+  OCTAVE
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +22,8 @@ export class ResultsManagerService implements OnInit {
 
   public results: any;
   public threshold: number = 1;
-  public window: number = 3;
+  private transposition: Transposition = Transposition.ALL;
+  public window: number = 0;
   public diatonic: boolean;
   public encoding: string = 'krn';
   public query: string;
@@ -26,7 +33,9 @@ export class ResultsManagerService implements OnInit {
 
   private verovioOptions = {
     inputFormat: 'xml',
+    allPages: 1,
     scale: 40,
+    adjustPageHeight: 1,
     noHeader: 1,
     noFooter: 1
   }
@@ -41,6 +50,28 @@ export class ResultsManagerService implements OnInit {
   ngOnInit() {
   }
 
+  public getMinOccLength(){
+    return this.threshold;
+  }
+  public setMinOccLength(min: number){
+    this.threshold = min;
+  }
+
+  public getTransposition(){
+    return this.transposition;
+  }
+  public setTransposition(transposition: String){
+    if (transposition === "none") {
+      this.transposition = Transposition.NONE;
+    }
+    if (transposition === "all") {
+      this.transposition = Transposition.ALL;
+    }
+    if (transposition === "octave") {
+      this.transposition = Transposition.NONE;
+    }
+  }
+
   public search() {
     this.searching = true;
     return this.searchService.search(this.encoding, this.query, this.threshold, this.window).pipe(
@@ -51,20 +82,18 @@ export class ResultsManagerService implements OnInit {
         this.getSvgExcerpts(0);
         this.getSvgExcerpts(1);
         this.searching = false;
-      ));
+      )).subscribe(data => console.log(data));
   }
 
   public getSvgExcerpts(pageNum: number) {
-    console.log("getting xml for page ");
-    console.log(pageNum);
+    console.log("getting xml for page " + pageNum);
     for (let occ of this.results.pages[pageNum].occurrences) {
-      console.log(occ);
       this.searchService.getPiece(occ.piece, occ.targetNotes, 'red').pipe(
       //ajax(BASE_PATH + occ.excerptUrl).pipe(
         tap(res => {
           occ.xml = res;
           occ.svg = this.verovioService.tk.renderData(res, this.verovioOptions);
-      })).subscribe(data => console.log(data));
+      })).subscribe(data => data));
     }
   }
 

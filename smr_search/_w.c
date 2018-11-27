@@ -197,7 +197,8 @@ struct KEntry** init_K_tables(struct Score* pattern, struct Score* target){
         int numMatching = 0;
         for(int j=0; j < target->num_vectors; j++){
             int x = 5;
-            if (target->vectors[j].diatonicDiff == curPatternVec.diatonicDiff){
+            //if (target->vectors[j].diatonicDiff == curPatternVec.diatonicDiff){
+            if (target->vectors[j].chromaticDiff == curPatternVec.chromaticDiff){
                 KTables[i][numMatching].targetVec = target->vectors[j];
                 KTables[i][numMatching].patternVec = curPatternVec;
                 KTables[i][numMatching].y = NULL;

@@ -1,8 +1,14 @@
 <div *ngIf="resultsManager.searched">
-    <ul>
-        <li *ngFor="let item of resultsManager.results.pages[p-1].occurrences | paginate: { id: 'results', itemsPerPage: pageSize, currentPage: p, totalItems: resultsManager.results.count }" [innerHTML]="safe(item.svg)">
-        </li>
-    </ul>
+    <div class="container">
+
+        <div class="row" *ngFor="let item of resultsManager.results.pages[p-1].occurrences | paginate: { id: 'results', itemsPerPage: pageSize, currentPage: p, totalItems: resultsManager.results.count }"> 
+
+            <span>{{ item.piece }}</span>
+            <div *ngIf="item.svg" class="col-md-8" [innerHTML]="safe(item.svg)"></div> 
+            <div *ngIf="!item.svg" class="col-md-8">Loading...</div>
+
+        </div>
+    </div>
                    
     <pagination-controls id="results" (pageChange)="pageChange($event)"></pagination-controls>
 </div>

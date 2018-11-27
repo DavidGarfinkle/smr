@@ -5,7 +5,7 @@ declare var verovio: any;
 @Injectable({
   providedIn: 'root'
 })
-export class VerovioHumdrumService {
+export class VerovioService {
     
   private options = {
     inputFormat: 'humdrum',
