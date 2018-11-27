@@ -117,13 +117,14 @@ export class DefaultService {
      * @param query A music query string
      * @param minOccLength Filter results for minimum length
      * @param maxTargetWindow Filter results for a maximum sorted distance between highlighted notes
+     * @param transposition An enum: what type of transpositions of the query will be returned
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public search(encoding?: string, query?: string, minOccLength?: number, maxTargetWindow?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Occurrence>>;
-    public search(encoding?: string, query?: string, minOccLength?: number, maxTargetWindow?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Occurrence>>>;
-    public search(encoding?: string, query?: string, minOccLength?: number, maxTargetWindow?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Occurrence>>>;
-    public search(encoding?: string, query?: string, minOccLength?: number, maxTargetWindow?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public search(encoding?: string, query?: string, minOccLength?: number, maxTargetWindow?: number, transposition?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Occurrence>>;
+    public search(encoding?: string, query?: string, minOccLength?: number, maxTargetWindow?: number, transposition?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Occurrence>>>;
+    public search(encoding?: string, query?: string, minOccLength?: number, maxTargetWindow?: number, transposition?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Occurrence>>>;
+    public search(encoding?: string, query?: string, minOccLength?: number, maxTargetWindow?: number, transposition?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (encoding !== undefined && encoding !== null) {
@@ -137,6 +138,9 @@ export class DefaultService {
         }
         if (maxTargetWindow !== undefined && maxTargetWindow !== null) {
             queryParameters = queryParameters.set('maxTargetWindow', <any>maxTargetWindow);
+        }
+        if (transposition !== undefined && transposition !== null) {
+            queryParameters = queryParameters.set('transposition', <any>transposition);
         }
 
         let headers = this.defaultHeaders;

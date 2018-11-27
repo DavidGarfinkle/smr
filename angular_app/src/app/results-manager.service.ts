@@ -15,14 +15,19 @@ export enum Transposition {
   OCTAVE
 }
 
+export enum Threshold {
+  ALL,
+  SOME
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class ResultsManagerService implements OnInit {
 
   public results: any;
-  public threshold: number = 1;
-  private transposition: Transposition = Transposition.ALL;
+  public threshold: Threshold = Threshold.ALL;
+  public transposition: Transposition = Transposition.ALL;
   public window: number = 0;
   public diatonic: boolean;
   public encoding: string = 'krn';
@@ -53,8 +58,8 @@ export class ResultsManagerService implements OnInit {
   public getMinOccLength(){
     return this.threshold;
   }
-  public setMinOccLength(min: number){
-    this.threshold = min;
+  public setMinOccLength(selection: Threshold){
+    this.threshold = selection;
   }
 
   public getTransposition(){
@@ -74,7 +79,7 @@ export class ResultsManagerService implements OnInit {
 
   public search() {
     this.searching = true;
-    return this.searchService.search(this.encoding, this.query, this.threshold, this.window).pipe(
+    return this.searchService.search(this.encoding, this.query, this.threshold, this.window, this.transposition).pipe(
       tap((res) => {
         this.results = res;
         this.count = res.count;

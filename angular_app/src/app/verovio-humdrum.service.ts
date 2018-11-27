@@ -14,6 +14,7 @@ export class VerovioHumdrumService {
     pageMarginBottom: 0,
     pageMarginRight: 0,
     pageMarginLeft: 0,
+    adjustPageHeight: 1,
     noHeader: 1,
     noFooter: 1,
     noJustification: 1,

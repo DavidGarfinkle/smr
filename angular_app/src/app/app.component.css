@@ -1,11 +1,3 @@
-.app-music-editor-container {
-  display: flex;
-  flex-direction: row;
-}
-#body #row1 {
-  height: 20em;
-} 
-
 #footer .menu {
     padding: 0;
 }
