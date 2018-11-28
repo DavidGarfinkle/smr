@@ -36,6 +36,10 @@ paths:
           in: "query"
           description: "An enum: what type of transpositions of the query will be returned"  
           type: "integer"
+        - name: "corpus"
+          in: "query"
+          description: "Select a corpus to search through"
+          type: "string"
       responses:
         200:
           description: "The server successfully completed a search for the music query and is returning the result(s)" 

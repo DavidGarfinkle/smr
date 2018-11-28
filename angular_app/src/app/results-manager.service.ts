@@ -28,6 +28,7 @@ export class ResultsManagerService implements OnInit {
   public results: any;
   public threshold: Threshold = Threshold.ALL;
   public transposition: Transposition = Transposition.ALL;
+  public corpus: String = "palestrina";
   public window: number = 0;
   public diatonic: boolean;
   public encoding: string = 'krn';
@@ -40,6 +41,7 @@ export class ResultsManagerService implements OnInit {
     inputFormat: 'xml',
     allPages: 1,
     scale: 40,
+    pageMarginLeft: 100,
     adjustPageHeight: 1,
     noHeader: 1,
     noFooter: 1
@@ -79,7 +81,7 @@ export class ResultsManagerService implements OnInit {
 
   public search() {
     this.searching = true;
-    return this.searchService.search(this.encoding, this.query, this.threshold, this.window, this.transposition).pipe(
+    return this.searchService.search(this.encoding, this.query, this.threshold, this.window, this.transposition, this.corpus).pipe(
       tap((res) => {
         this.results = res;
         this.count = res.count;

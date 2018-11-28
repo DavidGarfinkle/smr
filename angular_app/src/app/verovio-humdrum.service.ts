@@ -9,7 +9,6 @@ export class VerovioHumdrumService {
     
   private options = {
     inputFormat: 'humdrum',
-    barLineWidth: 0.1,
     pageMarginTop: 0,
     pageMarginBottom: 0,
     pageMarginRight: 0,

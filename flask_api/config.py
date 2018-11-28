@@ -5,6 +5,8 @@ BASEDIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), os.path.pardi
 
 DEBUG = True
 
+DATABASE_PATH = "/usr/share/smr-db/"
+
 PALESTRINA_VECTOR_INDEXED = "/usr/share/smr-db/palestrina-masses-vectors"
 PALESTRINA_XML = "/usr/share/smr-db/palestrina-masses-xml"
 

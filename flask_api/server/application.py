@@ -20,8 +20,6 @@ def root():
 def search():
 
     if "text/html" in request.accept_mimetypes:
-        print("Yes")
-        print(app.config["ANGULAR"])
         return send_from_directory(app.config["ANGULAR"], "index.html")
 
     if request.accept_mimetypes.accept_json:
@@ -35,7 +33,7 @@ def search_json():
 
     app.logger.info("Got request with query: \n{}".format(query_string))
     try:
-        results = search_controller(music_encoding, query_string, app.config["PALESTRINA_VECTOR_INDEXED"])
+        results = search_controller(music_encoding, query_string)
     except BadQueryError as e:
         return e.html_response, e.status_code
 
@@ -56,6 +54,16 @@ def get_piece(piece_name):
     #if "application/svg" in request.accept_mimetypes:
     #    return piece_excerpt_svg()
 
+    # Assuming unique piece names...
+    found = ""
+    for root, dirs, files in os.walk(os.path.join(app.config["DATABASE_PATH"], "music")):
+        for f in files:
+            cur = f.split('.')[0]
+            if piece_name == cur:
+                found = os.path.join(root, f)
+
+    print("CAN YOU SEE ME")
+    print(found)
     return Response(
-        highlighted_excerpt_xml(piece_name, note_indices = request.args.get("n").split(","), color = request.args.get("c")),
+        highlighted_excerpt_xml(found, note_indices = request.args.get("n").split(","), color = request.args.get("c")),
         mimetype="application/xml")

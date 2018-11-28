@@ -25,7 +25,7 @@ export class MusicEditorComponent implements AfterViewInit {
   humdrumInput: string = "";
   renderedHumdrum: string;
   results: string = "results";
-  aceceOptions: any;
+  aceOptions: any;
   svg: string;
 
   constructor(

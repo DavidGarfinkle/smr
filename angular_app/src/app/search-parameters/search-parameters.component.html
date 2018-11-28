@@ -1,0 +1,62 @@
+<div id="search-parameters">
+
+    <div>
+	  Chromatic Transpositions
+    </div>
+
+	<div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="resultsManager.transposition">
+	  <label ngbButtonLabel class="btn-primary">
+		<input ngbButton type="radio" [value]="Transposition.ALL"> 
+		All
+	  </label>
+	  <label ngbButtonLabel class="btn-primary">
+		<input ngbButton type="radio" [value]="Transposition.OCTAVE"> 
+		Octave
+	  </label>
+	  <label ngbButtonLabel class="btn-primary">
+		<input ngbButton type="radio" [value]="Transposition.NONE">
+		None
+	  </label>
+	</div>
+
+
+    <div>
+      Occurrence Length
+    </div>
+    
+	<div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="resultsManager.threshold">
+	  <label ngbButtonLabel class="btn-primary">
+		<input ngbButton type="radio" [value]="Threshold.ALL"> 
+		All
+	  </label>
+	  <label ngbButtonLabel class="btn-primary">
+		<input ngbButton type="radio" [value]="Threshold.SOME"> 
+        Some
+	  </label>
+	</div>
+
+    <div>
+      Corpus
+    </div>
+    
+	<div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="resultsManager.corpus">
+	  <label ngbButtonLabel class="btn-primary">
+		<input ngbButton type="radio" [value]="'palestrina'"> 
+        Palestrina
+	  </label>
+	  <label ngbButtonLabel class="btn-primary">
+		<input ngbButton type="radio" [value]="'bach-fugues'"> 
+		Bach
+	  </label>
+	  <label ngbButtonLabel class="btn-primary">
+		<input ngbButton type="radio" [value]="'tavern'"> 
+		Mozart/Beethoven Variations
+	  </label>
+	</div>
+
+    <button id="search" class="btn-primary align-bottom" (click)="resultsManager.search()">
+        <i *ngIf="!resultsManager.searching" class="fa fa-search"></i>
+        <i *ngIf="resultsManager.searching" class="fa fa-spinner spinning"></i>
+    </button>
+
+</div>

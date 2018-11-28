@@ -17,7 +17,7 @@ import { BASE_PATH } from '../../../api/variables';
 export class ResultsPaginationComponent implements OnInit {
 
   p: number = 1;
-  pageSize: number = 10;
+  pageSize: number = 6;
   collection: any;  
   svgExcerpts: any;
   count: number;
@@ -62,13 +62,7 @@ export class ResultsPaginationComponent implements OnInit {
   }
 */
   safe(svg) {
-    if (svg !== null) {
-        return this.sanitizer.bypassSecurityTrustHtml(svg);
-    }
-    else {
-        return "Loading..."
-    }
-
+    return this.sanitizer.bypassSecurityTrustHtml(svg);
   }
 
   pageChange(pageNum: number) {

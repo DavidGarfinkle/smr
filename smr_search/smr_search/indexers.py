@@ -1,3 +1,5 @@
+import sys
+import os
 import csv
 import io
 import music21
@@ -194,5 +196,31 @@ class NotePointSet(music21.stream.Stream):
 
 
 if __name__ == "__main__":
-    df = legacy_intra_vectors("/usr/share/smr-db/palestrina-masses-xml/Ad_fugam_Credo_4.mid.xml")
-    csv = legacy_intra_vectors_to_csv(df)
+
+    if (len(sys.argv) < 1) or (sys.argv[1] in ("-h", "--help")):
+        print("indexers.py input_dir output_dir")
+
+    input_dir = sys.argv[1]
+    output_dir = sys.argv[2]
+
+    failed = []
+
+    for piece in os.listdir(input_dir):
+        full_path = os.path.join(input_dir, piece)
+        piece_name = os.path.splitext(piece)[0]
+
+        print("Indexing " + full_path)
+
+        try:
+            score = music21.converter.parse(full_path)
+            csv_file = legacy_intra_vectors(score, 10)
+        except Exception:
+            failed.append(piece)
+
+        with open(os.path.join(output_dir, piece_name + '.vectors'), 'w') as f:
+            f.write(csv_file)
+
+    if len(failed) > 0:
+        print("Failed some pieces...\n{}".format("\n".join(failed)))
+
+

@@ -10,14 +10,14 @@ def piece_excerpt_svg():
     """
     pass
 
-def highlighted_excerpt_xml(piece_name, note_indices, color):
+def highlighted_excerpt_xml(piece_path, note_indices, color):
     """
     Provide an excerpt, highlighted excerpt, or entire piece from the database
     """
     from smr_search.indexers import NotePointSet
     from io import StringIO
 
-    score = music21.converter.parse(os.path.join(app.config["PALESTRINA_XML"], "{}.mid.xml".format(piece_name)))
+    score = music21.converter.parse(piece_path)
     pointset = list(NotePointSet(score).flat.notes)
 
     pointset_indices = [int(i) for i in note_indices]

@@ -6,9 +6,17 @@
 
         <div class="row" *ngFor="let item of resultsManager.results.pages[p-1].occurrences | paginate: { id: 'results', itemsPerPage: pageSize, currentPage: p, totalItems: resultsManager.results.count }"> 
 
-            <span>{{ item.pieceName }}</span>
-            <div *ngIf="item.svg" class="col-md-8" [innerHTML]="safe(item.svg)"></div> 
-            <div *ngIf="!item.svg" class="col-md-8">Loading...</div>
+
+            <div class="col-md-12" *ngIf="item.svg">
+                <span>{{ item.pieceName }}</span>
+                <div class="row">
+                    <div class="col-md-8" [innerHTML]="safe(item.svg)"></div> 
+                    <div *ngIf="!item.svg" class="col-md-8">Loading...</div>
+                </div>
+            </div>
+            <div class="col-md-12" *ngIf="!item.svg">
+                <i class="fa fa-spinner spinning"></i>
+            </div>
 
         </div>
     </div>

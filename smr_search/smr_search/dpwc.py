@@ -51,7 +51,6 @@ def search(pattern_str, mass_path):
         for occ in result:
             # mass is a path which ends in the XML file of that mass
             occ['piece'] = mass_path.split('/')[-1].split('.')[0]
-            occ['pieceName'] = ' '.join(occ['piece'].split('_')[:-1])
     return result
 
 def search_scores(pattern_str, palestrina_path):
