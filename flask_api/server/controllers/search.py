@@ -19,7 +19,7 @@ def search_controller(music_encoding, query_string):
     corpus = request.args.get("corpus")
     dataloc = os.path.join(current_app.config['DATABASE_PATH'], 'index-vectors', corpus)
 
-    if len(query.flat.notes) < 3:
+    if len(NotePointSet(query).flat.notes) < 3:
         raise BadQueryError("Query must be at least three notes long!")
 
     indexed_query = legacy_intra_vectors(query, window=1)

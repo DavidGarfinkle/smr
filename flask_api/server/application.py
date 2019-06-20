@@ -62,8 +62,6 @@ def get_piece(piece_name):
             if piece_name == cur:
                 found = os.path.join(root, f)
 
-    print("CAN YOU SEE ME")
-    print(found)
     return Response(
         highlighted_excerpt_xml(found, note_indices = request.args.get("n").split(","), color = request.args.get("c")),
         mimetype="application/xml")

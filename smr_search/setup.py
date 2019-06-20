@@ -6,5 +6,5 @@ setup(name='smr_search',
         author='David Garfinkle',
         author_email='david.garfinkle@mail.mcgill.ca',
         url='https://github.com/davidgarfinkle/smr/',
-        packages=['smr_search']
+        packages=['smr_search.indexers', 'smr_search.tests']
         )

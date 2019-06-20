@@ -5,20 +5,24 @@ verify_ssl = true
 
 [packages]
 flask = "*"
-patternfinder = {git = "https://github.com/elvis-project/patternfinder", editable = true}
-"music21" = "*"
+patternfinder = {git = "https://github.com/elvis-project/patternfinder",editable = true}
+music21 = "*"
 pyyaml = "*"
 more-itertools = "*"
 whoosh = "*"
 numpy = "*"
 pandas = "*"
-smr-search = {editable = true, path = "./smr_search"}
-smr-flask = {path = "./flask_api", editable = true}
+smr-search = {path = "./smr_search",editable = true}
+smr-flask = {path = "./flask_api",editable = true}
 tqdm = "*"
 flask-cors = "*"
+"psycopg2" = "*"
+flask-sqlalchemy = "*"
+sqlalchemy = "*"
 
 [requires]
 python_version = "3.5"
 
 [dev-packages]
 ipython = "*"
+pytest = "*"

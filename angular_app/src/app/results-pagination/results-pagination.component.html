@@ -9,6 +9,7 @@
 
             <div class="col-md-12" *ngIf="item.svg">
                 <span>{{ item.pieceName }}</span>
+                <a href="api_base_path + item.url" class="btn"><i class="fa fa-clipboard"></i></a>
                 <div class="row">
                     <div class="col-md-8" [innerHTML]="safe(item.svg)"></div> 
                     <div *ngIf="!item.svg" class="col-md-8">Loading...</div>

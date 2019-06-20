@@ -5,6 +5,7 @@ import io
 import music21
 import pandas as pd
 import numpy as np
+from itertools import combinations
 
 us = music21.environment.UserSettings()
 us.restoreDefaults()
@@ -193,6 +194,8 @@ class NotePointSet(music21.stream.Stream):
         self.autoSort = False
         for n in new_notes:
             self.insert(n)
+
+
 
 
 if __name__ == "__main__":
